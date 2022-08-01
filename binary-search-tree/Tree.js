@@ -49,7 +49,36 @@ class Tree {
     }
   }
 
-  delete(value) {}
+  // This method mainly calls deleteRec()
+  delete(value) {
+    this.root = this.deleteRec(this.root, value);
+  }
+
+  deleteRec(root, value) {
+    if (root == null) return root;
+
+    if (value < root.data) root.left = this.deleteRec(root.left, value);
+    else if (value > root.value) root.right = this.deleteRec(root.right, value);
+    else {
+      if (root.left == null) return root.right;
+      else if (root.right == null) return root.left;
+
+      root.data = this.minValue(root.right);
+
+      root.right = this.deleteRec(root.right, root.data);
+    }
+
+    return root;
+  }
+
+  minValue(root) {
+    let minv = root.data;
+    while (root.left != null) {
+      minv = root.left.data;
+      root = root.left;
+    }
+    return minv;
+  }
 }
 
 module.exports = Tree;
