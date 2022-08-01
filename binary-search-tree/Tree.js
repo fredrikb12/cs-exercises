@@ -37,8 +37,16 @@ class Tree {
     this._root = root;
   }
 
-  insert(value) {
-    
+  insert(value, root) {
+    if (!root) root = this.root;
+    if (value === root.data) return;
+    if (value < root.data) {
+      root.left ? this.insert(value, root.left) : (root.left = new Node(value));
+    } else {
+      root.right
+        ? this.insert(value, root.right)
+        : (root.right = new Node(value));
+    }
   }
 
   delete(value) {}
